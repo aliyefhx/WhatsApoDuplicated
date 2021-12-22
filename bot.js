@@ -6,6 +6,7 @@ you may not use this file except in compliance with the License.
 WhatsAsena - Yusuf Usta
 recodedby: abdullah*/
 
+const WhatsAsenaStack = require("whatsdark-npm");
 const fs = require("fs");
 const os = require("os");
 const path = require("path");
