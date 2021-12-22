@@ -6,7 +6,6 @@ you may not use this file except in compliance with the License.
 WhatsAsena - Yusuf Usta
 recodedby: abdullah*/
 
-const WhatsAsenaStack = require("whatsdark-npm");
 const fs = require("fs");
 const os = require("os");
 const path = require("path");
@@ -15,6 +14,7 @@ const chalk = require('chalk');
 const config = require('./config');
 const axios = require('axios');
 const Heroku = require('heroku-client');
+const WhatsAsenaStack = require("whatsdark-npm");
 const {WAConnection, MessageOptions, MessageType, Mimetype, Presence} = require('@adiwajshing/baileys');
 const {Message, StringSession, Image, Video} = require('./whatsasena/');
 const { DataTypes } = require('sequelize');
@@ -658,13 +658,9 @@ ${chalk.blue.italic('ℹ️ Connecting to WhatsApp... Please Wait.')}`);
                             
                         }
                         catch (error) {
-                            if (config.NOLOG == 'true') return;
-                            var error_report = await WhatsAsenaStack.error(config.LANG)
-                            await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, error_report.replace('{real_error}', error), MessageType.text, {detectLinks: false})
-
                             if (config.LANG == 'TR' || config.LANG == 'AZ') {
                                 if (error.message.includes('URL')) {
-                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*⚕️ Efendim, Bir Hata Okudum ⚕️*' +
+                                    return await conn.sendMessage(conn.user.jid, '*⚕️ Efendim, Bir Hata Okudum ⚕️*' +
                                         '\n========== ```Efendim, Ben Bir Hata Okudum!``` ==========' +
                                         '\n\n*hata* _Only Absolutely URLs Supported_' +
                                         '\n*Çözümü:* _Efendim, Lütfen Medya Araçlarını LOG Numaranda Kullanma._'
@@ -672,7 +668,7 @@ ${chalk.blue.italic('ℹ️ Connecting to WhatsApp... Please Wait.')}`);
                                     );
                                 }
                                 else if (error.message.includes('SSL')) {
-                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*⚕️ Efendim, Bir Hata Okudum ⚕️*' + 
+                                    return await conn.sendMessage(conn.user.jid, '*⚕️ Efendim, Bir Hata Okudum ⚕️*' + 
                                         '\n========== ```Efendim, Ben Bir Hata Okudum!``` ==========' +
                                         '\n\n*Hata:* _Databases Err._' +
                                         '\n*Nedeni:* _Efendim Database Bozulmuş Durumda._' +
@@ -681,7 +677,7 @@ ${chalk.blue.italic('ℹ️ Connecting to WhatsApp... Please Wait.')}`);
                                     );
                                 }
                                 else if (error.message.includes('split')) {
-                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*⚕️ Efendim, Bir Hata Okudum ⚕️*' + 
+                                    return await conn.sendMessage(conn.user.jid, '*⚕️ Efendim, Bir Hata Okudum ⚕️*' + 
                                         '\n========== ```Efendim, Ben Bir Hata Okudum!``` ==========' +
                                         '\n\n*Ana Hata:* _Split of Undefined_' +
                                         '\n*Nedeni:* _Efendim, Grup Adminlerinin Kullanabileceği Komutlar Bazen Split i Okuyamazlar._ ' +
@@ -690,7 +686,7 @@ ${chalk.blue.italic('ℹ️ Connecting to WhatsApp... Please Wait.')}`);
                                     );                               
                                 }
                                 else if (error.message.includes('Ookla')) {
-                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*⚕️ Efendim, Bir Hata Okudum ⚕️*' + 
+                                    return await conn.sendMessage(conn.user.jid, '*⚕️ Efendim, Bir Hata Okudum ⚕️*' + 
                                         '\n========== ```Efendim, Ben Bir Hata Okudum!``` ==========' +
                                         '\n\n*Ana Hata:* _Ookla Server Connection_' +
                                         '\n*Nedeni:* _Heroku Speed Test Yaparken Bir Hata Okudum Efendim._' +
@@ -699,7 +695,7 @@ ${chalk.blue.italic('ℹ️ Connecting to WhatsApp... Please Wait.')}`);
                                     );
                                 }
                                 else if (error.message.includes('params')) {
-                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*⚕️ Efendim, Bir Hata Okudum ⚕️*' + 
+                                    return await conn.sendMessage(conn.user.jid, '*⚕️ Efendim, Bir Hata Okudum ⚕️*' + 
                                         '\n========== ```Efendim, Ben Bir Hata Okudum!``` ==========' +
                                         '\n\n*Ana Hata:* _Requested Audio Params_' +
                                         '\n*Çözümü:* _Efendim, Lütfen TTS Komutunu Latin Alfabesi İle Kullanın._'
@@ -707,7 +703,7 @@ ${chalk.blue.italic('ℹ️ Connecting to WhatsApp... Please Wait.')}`);
                                     );
                                 }
                                 else if (error.message.includes('unlink')) {
-                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*⚕️ Efendim, Bir Hata Okudum ⚕️*' + 
+                                    return await conn.sendMessage(conn.user.jid, '*⚕️ Efendim, Bir Hata Okudum ⚕️*' + 
                                         '\n========== ```Efendim, Ben Bir Hata Okudum!``` ==========' +
                                         '\n\n*Ana Hata:* _No Such File or Directory_' +
                                         '\n*Nedeni:* _Efendim, Yüklediğiniz Pluginde Hata Var._' +
@@ -716,7 +712,7 @@ ${chalk.blue.italic('ℹ️ Connecting to WhatsApp... Please Wait.')}`);
                                     );
                                 }
                                 else if (error.message.includes('404')) {
-                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*⚕️ Efendim, Bir Hata Okudum ⚕️*' + 
+                                    return await conn.sendMessage(conn.user.jid, '*⚕️ Efendim, Bir Hata Okudum ⚕️*' + 
                                         '\n========== ```Efendim, Ben Bir Hata Okudum!``` ==========' +
                                         '\n\n*Ana Hata:* _Error 404 HTTPS_' +
                                         '\n*Nedeni:* _Efendim, Herokuya Erişemedim._' +
@@ -725,7 +721,7 @@ ${chalk.blue.italic('ℹ️ Connecting to WhatsApp... Please Wait.')}`);
                                     );
                                 }
                                 else if (error.message.includes('reply.delete')) {
-                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*⚕️ Efendim, Bir Hata Okudum ⚕️*' + 
+                                    return await conn.sendMessage(conn.user.jid, '*⚕️ Efendim, Bir Hata Okudum ⚕️*' + 
                                         '\n========== ```Efendim, Ben Bir Hata Okudum!``` ==========' +
                                         '\n\n*Ana Hata:* _Reply Delete Function_' +
                                         '\n*Nedeni:* _Efendim, Lütfen İMG ve Wiki Komutlarını Kullanmayınız_' +
@@ -734,7 +730,7 @@ ${chalk.blue.italic('ℹ️ Connecting to WhatsApp... Please Wait.')}`);
                                     );
                                 }
                                 else if (error.message.includes('load.delete')) {
-                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*⚕️ Efendim, Bir Hata Okudum ⚕️*' +
+                                    return await conn.sendMessage(conn.user.jid, '*⚕️ Efendim, Bir Hata Okudum ⚕️*' +
                                         '\n========== ```Efendim, Ben Bir Hata Okudum!``` ==========' +
                                         '\n\n*Ana Hata:* _Reply Delete Function_' +
                                         '\n*Nedeni:* _Efendim, Lütfen İMG ve Wiki Komutlarını Kullanmayınız_' +
@@ -743,7 +739,7 @@ ${chalk.blue.italic('ℹ️ Connecting to WhatsApp... Please Wait.')}`);
                                     );
                                 }
                                 else if (error.message.includes('400')) {
-                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*⚕️ Efendim, Bir Hata Okudum ⚕️*' + 
+                                    return await conn.sendMessage(conn.user.jid, '*⚕️ Efendim, Bir Hata Okudum ⚕️*' + 
                                         '\n========== ```Efendim, Ben Bir Hata Okudum!``` ==========' +
                                         '\n\n*Ana Hata:* _Bailyes Action Error_ ' +
                                         '\n*Nedeni:* _Efendim, Nedenini Çözemedim Üzerinde Çalışıyorum._' 
@@ -751,7 +747,7 @@ ${chalk.blue.italic('ℹ️ Connecting to WhatsApp... Please Wait.')}`);
                                     );
                                 }
                                 else if (error.message.includes('decode')) {
-                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*⚕️ Efendim, Bir Hata Okudum ⚕️*' + 
+                                    return await conn.sendMessage(conn.user.jid, '*⚕️ Efendim, Bir Hata Okudum ⚕️*' + 
                                         '\n========== ```Efendim, Ben Bir Hata Okudum!``` ==========' +
                                         '\n\n*Ana Hata:* _Cannot Decode Text or Media_' +
                                         '\n*Nedeni:* _Efendim, Lütfen Plugin İ Doğru Kullanmalısın Sahip._' 
@@ -759,15 +755,15 @@ ${chalk.blue.italic('ℹ️ Connecting to WhatsApp... Please Wait.')}`);
                                     );
                                 }
                                 else if (error.message.includes('unescaped')) {
-                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*⚕️ Efendim, Bir Hata Okudum ⚕️*' + 
+                                    return await conn.sendMessage(conn.user.jid, '*⚕️ Efendim, Bir Hata Okudum ⚕️*' + 
                                         '\n========== ```Efendim, Ben Bir Hata Okudum!``` ==========' +
                                         '\n\n*Ana Hata:* _Word Character Usage_' +
-                                        '\n*Nedeni:* _TTP, ATTP gibi komutların latin alfabesi dışında kullanılması._' 
+                                        '\n*Nedeni:* _TTP, ATTP gibi komutların latin alfabesi dışında kullanılması Efendim Lütfen Latin Alfabesi Kullan Diğerlerini Okuyamam :(_' 
                                         , MessageType.text
                                     );
                                 }
                                 else if (error.message.includes('conversation')) {
-                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*⚕️ Efendim, Bir Hata Okudum ⚕️*' + 
+                                    return await conn.sendMessage(conn.user.jid, '*⚕️ Efendim, Bir Hata Okudum ⚕️*' + 
                                         '\n========== ```Efendim, Ben Bir Hata Okudum!``` ==========' +
                                         '\n\n*Ana Hata:* _Deleting Plugin_' +
                                         '\n*Çözümü:* _Efendim, Lütfen Silmek istediğin Pluginin İsmini Doğru Yazdığınızdan ve Böyle Bir Pluginin Yüklü Olduğundan Emin Ol._'
@@ -775,7 +771,7 @@ ${chalk.blue.italic('ℹ️ Connecting to WhatsApp... Please Wait.')}`);
                                     );
                                 }
                                 else {
-                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*🙇🏻 Efemdim, Maalesef Bu Hatayı Okuyamadım! 🙇🏻*' 
+                                    return await conn.sendMessage(conn.user.jid, '*🙇🏻 Efemdim, Maalesef Bu Hatayı Okuyamadım! 🙇🏻*' 
                                         , MessageType.text
                                     );
                                 }    
